@@ -1,0 +1,2 @@
+1. MoverZeroAtEndOfAnArray
+  {0,1,0,23,9,0,39} -> {1,23,9,39,0,0,0}
