@@ -1,6 +1,6 @@
 package stack;
 
-class StackImplementation{
+class StackImplementation<T>{
 
     private int[] stackArray;
     private int peek = 0;

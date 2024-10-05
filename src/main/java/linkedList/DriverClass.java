@@ -3,7 +3,7 @@ package linkedList;
 public class DriverClass {
 
     public static void main(String[] args) {
-        SinglyLinkedListUsingClass slc = new SinglyLinkedListUsingClass();
+        SinglyLinkedListUsingClass<Integer> slc = new SinglyLinkedListUsingClass<>();
 
 //        slc.insertAtBegining(10);
 //        slc.insertAtBegining(13);
@@ -16,17 +16,24 @@ public class DriverClass {
 //        slc.show();
 
 
-//        slc.insertAtBegining(10);
-//        slc.insertAtBegining(13);
-//        slc.insertAtBegining(17);
-//        slc.insertAtBegining(29);
-//        slc.insertAtBegining(15);
+        slc.insertAtBegining(10);
+        slc.insertAtBegining(13);
+        slc.insertAtBegining(17);
+        slc.insertAtBegining(29);
+        slc.insertAtBegining(15);
+        slc.show();
+        slc.reverseTheList();
+        slc.show();
 //        slc.deleteAtBegining();
 //        slc.show();
 //        slc.deleteAtEnding();
 //        slc.show();
 //        slc.deleteAtPos(3);
 //        slc.show();
+
+//        SinglyLinkedListUsingClass<String> slc2 = new SinglyLinkedListUsingClass<>();
+//        slc2.insertAtBegining("one");
+//        slc2.show();
 
 
 

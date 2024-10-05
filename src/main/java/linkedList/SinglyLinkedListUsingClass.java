@@ -1,6 +1,8 @@
 package linkedList;
 
-public class SinglyLinkedListUsingClass {
+import java.util.Iterator;
+
+public class SinglyLinkedListUsingClass<T> implements Iterable<T>{
 
     private Node head;
 
@@ -8,18 +10,19 @@ public class SinglyLinkedListUsingClass {
         this.head = null;
     }
 
+
     class Node{
-        private int data;
+        private T data;
         private Node next;
 
-        Node(int data){
+        Node(T data){
             this.data = data;
             next = null;
         }
 
     }
 
-    public void insertAtBegining(int data){
+    public void insertAtBegining(T data){
         Node newNode = new Node(data);
         if(head == null){
             head = newNode;
@@ -30,7 +33,7 @@ public class SinglyLinkedListUsingClass {
         }
     }
 
-    public void insertAtEnd(int data){
+    public void insertAtEnd(T data){
         Node newNode = new Node(data);
         Node temp = head;
         do{
@@ -41,7 +44,7 @@ public class SinglyLinkedListUsingClass {
 
     }
 
-    public void insertAtPos(int pos, int data){
+    public void insertAtPos(int pos, T data){
         if(pos == 0){
             insertAtBegining(data);
             return;
@@ -94,10 +97,41 @@ public class SinglyLinkedListUsingClass {
         temp.next = null;
     }
 
+    public void reverseTheList(){
+        Node prev = null;
+        Node current = head;
+        Node next = head.next;
+        while(current != null){
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+
+        }
+        head = prev;
+
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            Node temp = head;
+            @Override
+            public boolean hasNext() {
+                return  temp != null;
+            }
+
+            @Override
+            public T next() {
+                T val = temp.data;
+                temp = temp.next;
+                return val;
+            }
+        };
+    }
 
     public void show(){
-
-        if(head.next == null){
+        if(head == null){
             System.out.println("List is empty!");
             return;
         }
