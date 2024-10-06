@@ -2,64 +2,60 @@ package linkedList;
 
 import java.util.Iterator;
 
-public class SinglyLinkedListUsingClass<T> implements Iterable<T>{
+public class CircularLinkedListUsingClass<T> implements Iterable<T>{
 
-    private Node head;
-    private int size;
-
-    SinglyLinkedListUsingClass(){
-        this.head = null;
+    private Node last;
+    CircularLinkedListUsingClass(){
+        last = null;
     }
 
-
     class Node{
-        private T data;
-        private Node next;
+        T data;
+        Node next;
 
         Node(T data){
             this.data = data;
             next = null;
         }
-
     }
 
-    public int getSize() {
-        return size;
+    public void insertFirst(T data, Node newNode){
+        last = newNode;
+        newNode.next = last;
     }
 
-    public void insertAtHead(T data){
+    public void insertAtBegining(T data){
         Node newNode = new Node(data);
-        if(head == null){
-            head = newNode;
+        if(last == null){
+            insertFirst(data, newNode);
         }
         else{
-            newNode.next = head;
-            head = newNode;
+            newNode.next = last.next;
+            last.next = newNode;
         }
-        size++;
     }
 
-    public void insertAtTail(T data){
+    public void insertAtEnd(T data){
         Node newNode = new Node(data);
-        Node temp = head;
-        do{
-            temp = temp.next;
+        if(last == null){
+            insertFirst(data, newNode);
         }
-        while(temp.next != null);
-        temp.next = newNode;
-        size++;
-
+        else{
+            newNode.next = last.next;
+            last.next = newNode;
+            last = newNode;
+        }
     }
 
     public void insertAtPos(int pos, T data){
+
         if(pos == 0){
-            insertAtHead(data);
+            insertAtBegining(data);
             return;
         }
-
         Node newNode = new Node(data);
-        Node temp = head;
-        for(int i = 1; i<pos; i++){
+        Node temp = last;
+        for(int i = 0; i<pos+1; i++){
             if(temp == null){
                 System.out.println("Invalid position.");
                 return;
@@ -68,25 +64,33 @@ public class SinglyLinkedListUsingClass<T> implements Iterable<T>{
         }
         newNode.next = temp.next;
         temp.next = newNode;
-        size++;
     }
 
-    public void deleteAtHead(){
-        if(head.next == null){
+    public void removeAtTail(){
+        Node temp = last.next;
+        while(temp.next != last){
+            temp = temp.next;
+
+        }
+        temp.next = last.next;
+        temp = last;
+    }
+
+    public void removeAtHead(){
+
+        if(last == null){
             System.out.println("Nothing to delete");
             return;
         }
-        head = head.next;
-        size--;
-
+        last.next = last.next.next;
     }
 
-    public void deleteAtPos(int pos){
+    public void removeAtPos(int pos){
         if(pos == 0){
-            deleteAtHead();
+            removeAtTail();
             return;
         }
-        Node temp = head;
+        Node temp = last;
         for(int i = 1; i<pos; i++){
             if(temp == null){
                 System.out.println("Invalid position.");
@@ -95,23 +99,13 @@ public class SinglyLinkedListUsingClass<T> implements Iterable<T>{
             temp = temp.next;
         }
         temp.next = temp.next.next;
-        size--;
 
-    }
-
-    public void deleteAtTail(){
-        Node temp = head;
-        do{
-            temp = temp.next;
-        }while(temp.next.next != null);
-        temp.next = null;
-        size--;
     }
 
     public void reverseTheList(){
         Node prev = null;
-        Node current = head;
-        Node next = head.next;
+        Node current = last;
+        Node next = last.next;
         while(current != null){
             next = current.next;
             current.next = prev;
@@ -119,14 +113,14 @@ public class SinglyLinkedListUsingClass<T> implements Iterable<T>{
             current = next;
 
         }
-        head = prev;
+        last = prev;
 
     }
 
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
-            Node temp = head;
+            Node temp = last;
             @Override
             public boolean hasNext() {
                 return  temp != null;
@@ -142,15 +136,16 @@ public class SinglyLinkedListUsingClass<T> implements Iterable<T>{
     }
 
     public void show(){
-        if(head == null){
+        if(last == null){
             System.out.println("List is empty!");
             return;
         }
-        Node temp = head;
-        while(temp != null){
+        Node temp = last.next;
+        do{
             System.out.print(temp.data+" -> ");
             temp = temp.next;
         }
-        System.out.println("null");
+        while(temp != last.next);
+        System.out.println("CircularList");
     }
 }

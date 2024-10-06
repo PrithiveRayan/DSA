@@ -1,54 +1,58 @@
 package linkedList;
 
-import java.util.Iterator;
-
-public class SinglyLinkedListUsingClass<T> implements Iterable<T>{
+public class DoublyLinkedListUsingClass<T> {
 
     private Node head;
     private int size;
 
-    SinglyLinkedListUsingClass(){
-        this.head = null;
+    DoublyLinkedListUsingClass(){
+        head = null;
     }
-
 
     class Node{
         private T data;
         private Node next;
+        private Node prev;
 
         Node(T data){
             this.data = data;
-            next = null;
+            this.next = null;
+            this.prev = null;
         }
-
     }
 
     public int getSize() {
         return size;
     }
 
+//    5 -> 10 -> 15
+
     public void insertAtHead(T data){
         Node newNode = new Node(data);
         if(head == null){
             head = newNode;
         }
-        else{
+        else {
             newNode.next = head;
+            head.prev = newNode;
             head = newNode;
         }
         size++;
     }
 
     public void insertAtTail(T data){
+        if(head == null){
+            insertAtHead(data);
+            return;
+        }
         Node newNode = new Node(data);
         Node temp = head;
-        do{
+        while(temp.next != null){
             temp = temp.next;
         }
-        while(temp.next != null);
+        newNode.prev = temp;
         temp.next = newNode;
         size++;
-
     }
 
     public void insertAtPos(int pos, T data){
@@ -56,101 +60,91 @@ public class SinglyLinkedListUsingClass<T> implements Iterable<T>{
             insertAtHead(data);
             return;
         }
-
         Node newNode = new Node(data);
         Node temp = head;
-        for(int i = 1; i<pos; i++){
-            if(temp == null){
-                System.out.println("Invalid position.");
+        for(int i=0; i<pos; i++){
+            if(temp == null || temp.next == null){
+                System.out.println("Invalid position");
                 return;
             }
             temp = temp.next;
         }
-        newNode.next = temp.next;
-        temp.next = newNode;
+        newNode.next = temp;
+        newNode.prev = temp.prev;
+        temp.prev.next = newNode;
         size++;
+
     }
 
-    public void deleteAtHead(){
-        if(head.next == null){
-            System.out.println("Nothing to delete");
+    public void removeAtHead(){
+        if(head == null){
+            System.out.println("Nothing to remove!");
             return;
         }
         head = head.next;
+        head.prev = null;
         size--;
-
     }
 
-    public void deleteAtPos(int pos){
+    public void removetAtPos(int pos){
         if(pos == 0){
-            deleteAtHead();
+            removeAtHead();
             return;
         }
+
         Node temp = head;
-        for(int i = 1; i<pos; i++){
-            if(temp == null){
-                System.out.println("Invalid position.");
+        for(int i=0; i<pos; i++){
+            if(temp == null || temp.next == null){
+                System.out.println("Invalid position");
                 return;
             }
             temp = temp.next;
         }
-        temp.next = temp.next.next;
+        if(temp.next == null){
+            temp.prev.next = null;
+
+        }else{
+            temp.prev.next = temp.next;
+            temp.next.prev = temp.prev;
+        }
         size--;
 
     }
 
-    public void deleteAtTail(){
+    public void removeAtTail(){
+        if(head == null){
+            System.out.println("Nothing to remove!");
+            return;
+        }
         Node temp = head;
-        do{
+        while(temp.next.next != null){
             temp = temp.next;
-        }while(temp.next.next != null);
+        }
         temp.next = null;
         size--;
-    }
 
-    public void reverseTheList(){
-        Node prev = null;
-        Node current = head;
-        Node next = head.next;
-        while(current != null){
-            next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
-
-        }
-        head = prev;
-
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new Iterator<T>() {
-            Node temp = head;
-            @Override
-            public boolean hasNext() {
-                return  temp != null;
-            }
-
-            @Override
-            public T next() {
-                T val = temp.data;
-                temp = temp.next;
-                return val;
-            }
-        };
     }
 
     public void show(){
-        if(head == null){
+        if(head == null) {
             System.out.println("List is empty!");
             return;
         }
+
         Node temp = head;
         while(temp != null){
             System.out.print(temp.data+" -> ");
             temp = temp.next;
         }
         System.out.println("null");
+
     }
+
+    public void showReverse(){
+        if (head == null){
+            System.out.println("List is empty!");
+            return;
+        }
+    }
+
 }
