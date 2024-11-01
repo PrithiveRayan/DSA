@@ -29,7 +29,7 @@ public class StackUsingLinkedListClass<T> {
     }
 
     public T peek(){
-        return top.data;
+        return top.data;    
     }
 
     public void show(){
