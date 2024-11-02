@@ -134,8 +134,68 @@ public class SinglyLinkedListUsingClass<T> implements Iterable<T>{
 
         }
         head = prev;
-
     }
+
+    // Doesn't modify the existing list
+    public SinglyLinkedListUsingClass oddEvenList1(){
+        SinglyLinkedListUsingClass<Integer> oddEvenList = new SinglyLinkedListUsingClass<>();
+        SinglyLinkedListUsingClass<Integer> oddList = new SinglyLinkedListUsingClass<>();
+        SinglyLinkedListUsingClass<Integer> evenList = new SinglyLinkedListUsingClass<>();
+
+        Node odd = head;
+        Node even = head.next;
+        Node current = head;
+        int count = 0;
+        while(current != null){
+            if((count+1)%2 != 0){
+                oddList.insertAtHead((Integer) odd.data);
+                if(odd.next != null){
+                    odd = odd.next.next;
+                }
+                current = current.next;
+                count++;
+            }
+            else {
+                evenList.insertAtHead((Integer) even.data);
+                if(even.next != null){
+                    even = even.next.next;
+                }
+                current = current.next;
+                count++;
+            }
+        }
+        while(evenList.head != null){
+            oddEvenList.insertAtHead(evenList.head.data);
+            evenList.head = evenList.head.next;
+        }
+        while(oddList.head != null){
+            oddEvenList.insertAtHead(oddList.head.data);
+            oddList.head = oddList.head.next;
+        }
+        return oddEvenList;
+    }
+
+    //Modifies the existing list
+    public SinglyLinkedListUsingClass<T> oddEvenList() {
+        if (head == null || head.next == null) {
+            return this;
+        }
+        SinglyLinkedListUsingClass<T> oddEvenList = new SinglyLinkedListUsingClass<>();
+        Node odd = head;
+        Node even = head.next;
+        Node evenHead = even;
+        while (even != null && even.next != null) {
+            odd.next = even.next;
+            odd = odd.next;
+            even.next = odd.next;
+            even = even.next;
+        }
+        odd.next = evenHead;
+        oddEvenList.head = head;
+        return oddEvenList;
+    }
+
+
 
     @Override
     public Iterator<T> iterator() {
@@ -161,6 +221,19 @@ public class SinglyLinkedListUsingClass<T> implements Iterable<T>{
             return;
         }
         Node temp = head;
+        while(temp != null){
+            System.out.print(temp.data+" -> ");
+            temp = temp.next;
+        }
+        System.out.println("null");
+    }
+
+    public void show(SinglyLinkedListUsingClass list){
+        if(list.head == null){
+            System.out.println("List is empty!");
+            return;
+        }
+        Node temp = list.head;
         while(temp != null){
             System.out.print(temp.data+" -> ");
             temp = temp.next;

@@ -13,6 +13,8 @@ public class DriverClass {
         slc.insertAtHead(29);
         slc.insertAtHead(15);
         slc.show();
+        SinglyLinkedListUsingClass<Integer> oddEven = slc.oddEvenList();
+        slc.show(oddEven);
         slc.deleteAtMiddle();
         slc.show();
         slc.reverseTheList();
