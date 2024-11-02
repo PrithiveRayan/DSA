@@ -99,6 +99,20 @@ public class SinglyLinkedListUsingClass<T> implements Iterable<T>{
 
     }
 
+    public void deleteAtMiddle(){
+        if(size == 0){
+            System.out.println("No value to delete.");
+            return;
+        }
+        int toDelete = size/2;
+        Node temp = head;
+        for(int i = 1; i<toDelete; i++){
+            temp = temp.next;
+        }
+        temp.next = temp.next.next;
+        size--;
+    }
+
     public void deleteAtTail(){
         Node temp = head;
         do{
