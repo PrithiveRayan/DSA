@@ -122,7 +122,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
             }
             else {
                 root.data = findMin(root.right);
-                root.right = delete(root.right, data);
+                root.right = delete(root.right, root.data);
             }
 
         }
@@ -137,6 +137,19 @@ public class BinarySearchTree<T extends Comparable<T>> {
             root = root.left;
         }
         return minVal;
+    }
+
+    public int findDFSMaxDepth(){
+        return findDFSDepth(root);
+    }
+
+    private int findDFSDepth(Node root){
+        if(root == null){
+            return 0;
+        }
+        int left = findDFSDepth(root.left);
+        int right = findDFSDepth(root.right);
+        return 1+Math.max(right,left);
     }
 
 

@@ -9,17 +9,18 @@ public class DriverClass {
         tree.insert(10);
         tree.insert(5);
         tree.insert(8);
+        System.out.println("Maximum depth is "+tree.findDFSMaxDepth());
 
         tree.inOrder();
 
-        if(tree.search(105) == null){
+        if(tree.search(10) == null){
             System.out.println("Element not found.");
         }
         else {
             System.out.println("Element found.");
         }
 
-        tree.delete(8);
+        tree.delete(4);
 
         tree.inOrder();
 
